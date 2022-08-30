@@ -1,31 +1,36 @@
-//import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+
+import ArithValidator from 'App/Validators/ArithValidator'
 
 // import { configure } from "@japa/runner"
 
 export default class PostsController 
-{   public async add( {request})
+{   public async add( {request} : HttpContextContract)
     {
-        const a:number=request.input("number1")
-        const b:number=request.input("number2")
-        return a+b
+        const payload = await request.validate(ArithValidator);
+        const a:number=payload['number1']
+        const b:number=payload['number2']
+       return a+b
+       
     }
     public async sub( {request})
     {
-        const a:number=request.input("number1")
-        const b:number=request.input("number2")
+        const payload=await request.validate(ArithValidator);
+        const a:number=payload["number1"]
+        const b:number=payload["number2"]
         return a-b
 }
 public async multiply( {request})
-    {
-        const a:number=request.input("number1")
-        const b:number=request.input("number2")
+    { const payload=await request.validate(ArithValidator)
+        const a:number=payload["number1"]
+        const b:number=payload["number2"]
     return a*b
    
     }
     public async div( {request})
-    {
-        const a:number=request.input("number1")
-        const b:number=request.input("number2")
+    { const payload=await request.validate(ArithValidator)
+        const a:number=payload["number1"]
+        const b:number=payload["number2"
     if(b==0)
     {
         return "undefined"

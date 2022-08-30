@@ -1,7 +1,5 @@
-
 import Route from '@ioc:Adonis/Core/Route'
-
-Route.post('/add','PostsController.add')
-Route.post('/sub','PostsController.sub')
-Route.post('/multiply','PostsController.multiply')
-Route.post('/div','PostsController.div')
+Route.put('/add','PostsController.add').middleware('Happy')
+Route.post('/sub','PostsController.sub').middleware('Happy')
+Route.patch('/multiply','PostsController.multiply').middleware('Happy')
+Route.get('/div','PostsController.div').middleware('Happy')

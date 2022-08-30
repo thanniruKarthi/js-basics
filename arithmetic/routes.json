@@ -1,0 +1,55 @@
+{
+  "root": [
+    {
+      "domain": "root",
+      "name": "drive.local.serve",
+      "pattern": "/uploads/*",
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "handler": "Closure",
+      "middleware": []
+    },
+    {
+      "domain": "root",
+      "name": "",
+      "pattern": "/add",
+      "methods": [
+        "POST"
+      ],
+      "handler": "PostsController.add",
+      "middleware": []
+    },
+    {
+      "domain": "root",
+      "name": "",
+      "pattern": "/sub",
+      "methods": [
+        "POST"
+      ],
+      "handler": "PostsController.sub",
+      "middleware": []
+    },
+    {
+      "domain": "root",
+      "name": "",
+      "pattern": "/multiply",
+      "methods": [
+        "POST"
+      ],
+      "handler": "PostsController.multiply",
+      "middleware": []
+    },
+    {
+      "domain": "root",
+      "name": "",
+      "pattern": "/div",
+      "methods": [
+        "POST"
+      ],
+      "handler": "PostsController.div",
+      "middleware": []
+    }
+  ]
+}
