@@ -1,14 +1,14 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'kars'
+  protected tableName = 'employ_ages'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments("id")
-      table.string("name")
-      table.string("dept")
-      
+      table.increments('id')
+
+   table.integer('empid')
+   table.integer('age')
     })
   }
 

@@ -41,4 +41,5 @@ Server.middleware.register([
 |
 */
 Server.middleware.registerNamed({
+  Happy:()=>import('App/Middleware/Happy')
 })
