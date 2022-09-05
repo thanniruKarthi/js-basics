@@ -103,7 +103,7 @@ public async getemploydata({request})
   .join('employ_ages', 'employ_depts.empid', 'employ_ages.empid')
    .select('employ_depts.*')
   .select('employ_ages.*')
-  .select('employ_ages.age').where('employ_depts.empid',request.input("getid"))
+  .where('employ_depts.empid',request.input("getid"))
 
 }
     
