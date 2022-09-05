@@ -1,15 +1,16 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 //import PostsController from 'App/Controllers/Http/PostsController'
-Route.post('/createdept','PostsController.createdept').middleware("Happy")
-Route.post('/readdept','PostsController.readdept').middleware("Happy")
-Route.post('/updatedept','PostsController.updatedept').middleware("Happy")
-Route.post('/deletedept','PostsController.deletedept').middleware("Happy")
-Route.post('/empdetails','PostsController.empdetails').middleware("Happy")
-Route.post('/createage','PostsController.createage').middleware("Happy")
-Route.post('/readage','PostsController.readage').middleware("Happy")
-Route.post('/updateage','PostsController.updateage').middleware("Happy")
-Route.post('/deleteage','PostsController.deleteage').middleware("Happy")
-Route.post('/getbyid','PostsController.getbyid').middleware("Happy")
-Route.post('/getbyname','PostsController.getbyname').middleware("Happy")
-Route.post('/iddata','PostsController.getemploydata').middleware("Happy")
+Route.group(()=>{
+Route.post('/createdept','employee.createdept')
+Route.post('/readdept','employee.readdept')
+Route.post('/updatedept','employee.updatedept')
+Route.post('/deletedept','employee.deletedept')
+Route.post('/empdetails','employee.empdetails')
+Route.post('/createage','employee.createage')
+Route.post('/readage','employee.readage')
+Route.post('/updateage','employee.updateage')
+Route.post('/deleteage','employee.deleteage')
+Route.post('/getbyid','employee.getbyid')
+Route.post('/getbyname','employee.getbyname')
+Route.post('/search','employee.getemploydata')}).middleware('Happy')

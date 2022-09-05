@@ -4,7 +4,7 @@ import EmployAge from 'App/Models/EmployAge'
 import EmploydeptValidator from 'App/Validators/EmploydeptValidator'
 import EmploAgeValidator from 'App/Validators/EmploAgeValidator'
 import Database from '@ioc:Adonis/Lucid/Database'
-export default class PostsController 
+export default class employee
 {   
     public async createdept({request}:HttpContextContract)
     {
@@ -15,6 +15,7 @@ export default class PostsController
     table2.name=payload['name']
     table2.dept =payload['dept']
   await table2.save()
+  return await EmployDept.all()
     }
     public async readdept()
     {
@@ -22,15 +23,27 @@ export default class PostsController
     }
     public async updatedept({})
     {
-        
+        try{
       const user=await EmployDept.findByOrFail('id',11)
-      user.dept="tesing"
+      user.dept="testing"
     await user.save()
+    return await EmployDept.all()
+        }
+        catch{
+
+          return "sorry wrong details"
+        }
     }
     public async deletedept({})
     {
+      try{ 
         const user = await EmployDept.findByOrFail('id',12)
 await user.delete()
+return await EmployDept.all()
+      }
+      catch{
+        return "sorry wrong details"
+      }
     }
     public async createage({request}:HttpContextContract)
     {
@@ -46,15 +59,28 @@ await user.delete()
     }
     public async updateage({})
     {
-        
-      const user=await EmployAge.findByOrFail('id',11)
-      user.age=22
+        try{
+      const user=await EmployAge.findByOrFail('id',12)
+      
+      user.age=23
+
     await user.save()
+        }
+        catch{
+          return "sorry wrong details"
+        }
     }
     public async deleteage({})
-    {
+    { 
+      try{
         const user = await EmployAge.findByOrFail('id',11)
 await user.delete()
+      }
+    
+    catch
+    {
+          return "sorry wrong details"
+    }
     }
     public async getbyid({request})
     {
@@ -75,9 +101,8 @@ public async getemploydata({request})
  return Database
   .from('employ_depts')
   .join('employ_ages', 'employ_depts.empid', 'employ_ages.empid')
-  .select('employ_depts.empid')
-  .select('employ_depts.name')
-  .select('employ_depts.dept')
+   .select('employ_depts.*')
+  .select('employ_ages.*')
   .select('employ_ages.age').where('employ_depts.empid',request.input("getid"))
 
 }
