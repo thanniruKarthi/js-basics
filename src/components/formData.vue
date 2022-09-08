@@ -1,11 +1,24 @@
 <template>
+
     <v-app>
-        
     <v-form
       ref="form"
       v-model="valid"
       lazy-validation
     >
+    <v-dialog
+    v-model="dialog"
+    >
+    <template v-slot:activator="{on}">
+      <v-flex text-right align-right>
+      <v-btn class="blue"
+        v-on="on"> <v-icon dark>
+        mdi-plus
+      </v-icon>
+      </v-btn>
+    </v-flex>
+    </template>
+    <v-card-text class=" white lighten-2">
       <v-text-field
         v-model="name"
         :counter="10"
@@ -42,23 +55,6 @@
               ></v-radio>
             </v-radio-group>
             <h2>Favourite subject</h2>
-            
-<!-- <v-checkbox  
-                v-model="subject"
-      label="Math"
-      value="Math"
-    ></v-checkbox>
-    <v-checkbox
-    v-model="subject"
-      label="Science"
-      value="science"
-    ></v-checkbox>
-    <v-checkbox
-    v-model="subject"
-      label="social"
-      value="social"
-    ></v-checkbox>  -->
-    
         <v-checkbox
         v-model="subject"
           v-for="(cho) in choice"
@@ -81,6 +77,7 @@
         label="Do you agree?"
         required
       ></v-checkbox>
+      
   
       <v-btn
         :disabled="!valid"
@@ -90,20 +87,55 @@
       >
         Validate
       </v-btn>
-  
+     
+    </v-card-text>
+    </v-dialog>
      
     </v-form>
-   
-    </v-app>
+    
+    <v-simple-table>
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>email</th>
+          <th>gender</th>
+          <th>subject</th>
+          <th>location</th>
+          
+         
+        </tr>
+      </thead>
+      <tbody>
+         <tr
+          v-for="(item,name) in arr" :key = "name">
+          <td>{{ item.name }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.gender}}</td>
+          <td>{{ item.choice}}</td>
+          <td>{{ item.items}}</td>
+          <v-btn @click="edit(item)"><v-icon dark>
+        mdi-pencil
+      </v-icon></v-btn> 
+          <v-btn @click="Delete(item)"><v-icon dark>
+        mdi-delete
+      </v-icon></v-btn>
+        </tr>
+      </tbody>
+    </v-simple-table>
+  </v-app>
   </template>
+
   <script>
+
     export default {
       data: () => ({
+        
         valid: true,
         name: '',
         nameRules: [
           v => !!v || 'Name is required',
           v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+          v=>/^[a-zA-z]+$/.test(v)||'name is not valid'
         ],
         email: '',
         emailRules: [
@@ -129,25 +161,49 @@
         checkbox: false,
         radioGroup:1,
         select:null,
-        subject:[]
+        subject:[],
+        arr:[],
         
+       
       }),
       
   
       methods: {
         validate () {
-          console.log(this.subject)
+          //const arr=this.arr
           this.$refs.form.validate()
-          const arr = {
+          this.arr.push ({
             name : this.name,
             email : this.email,
             gender :this.gender,
             choice :this.subject,
             items:this.select,
-
-          }
-          console.log(JSON.stringify(arr))
+          })
+          this.dialog = false
+          this.$refs.form.reset()
+          //console.log(JSON.stringify(arr))
         },
+editedItem:[],
+editedIndex:-1,
+      editItem (item) {
+        this.editedIndex = this.arr.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.dialog = true
+        if (this.editedIndex > -1) {
+          Object.assign(this.arr[this.editedIndex], this.editedItem)
+        } else {
+          this.arr.push(this.editedItem)
+        }
+       
+      },
+        Delete(item)
+        {
+          this.editedIndex = this.arr.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.arr.splice(item, 1)
+        },
+        
+        
     
       },
      

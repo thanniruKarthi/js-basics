@@ -1,13 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import formData from '../components/formData.vue'
+import tableData from '../components/tableData.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
-  path: '/formData',
+  path: '/',
   name: 'formData',
   component: formData
+  },
+  {
+    path:'/tableData',
+    name:'tableData',
+    component:tableData
   }
 ]
 
