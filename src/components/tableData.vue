@@ -157,7 +157,7 @@
 
       gender:'',
       genderRules: [
-        v => !!v || 'Name is required'],
+        v => !!v || 'gender is required'],
 
       choice: [
        {id :1,name:'math'},{id:2,name:'physics'},{id:3,name:'social'}],
