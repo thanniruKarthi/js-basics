@@ -1,19 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import formData from '../components/formData.vue'
-import tableData from '../components/tableData.vue'
+import apiintegration from '../components/api-integration.vue'
+import formDisplay from '../components/formDisplay.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  
   {
-  path: '/',
-  name: 'formData',
-  component: formData
+    path:'/readdata',
+    name:'apiintegration',
+    component:apiintegration
+
   },
   {
-    path:'/tableData',
-    name:'tableData',
-    component:tableData
+    path:'/formDisplay',
+    name:'formdisplay',
+    component:formDisplay
   }
 ]
 
