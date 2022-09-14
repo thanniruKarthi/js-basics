@@ -1,22 +1,36 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import apiintegration from '../components/api-integration.vue'
-import formDisplay from '../components/formDisplay.vue'
+import deptTableVue from '@/components/deptTable.vue'
+import ageTableVue from '../components/ageTable.vue'
+import  searchGlobal from '../components/searchGlobal.vue'
+import DirectiveAge from '../components/DirectiveAge.vue'
 Vue.use(VueRouter)
 
 const routes = [
   
   {
-    path:'/readdata',
-    name:'apiintegration',
-    component:apiintegration
+    path:'/TableDept',
+    name:'deptTableVue',
+    component:deptTableVue
 
   },
+ 
   {
-    path:'/formDisplay',
-    name:'formdisplay',
-    component:formDisplay
-  }
+    path:'/Tableage',
+    name:'Tableage',
+    component:ageTableVue
+  },
+  {
+    path:'/searchglobal',
+    name:'globalsearch',
+    component:searchGlobal
+  },
+  {
+    path:'/Directive',
+    name:'Directive',
+    component:DirectiveAge
+  },
+  
 ]
 
 // eslint-disable-next-line no-new

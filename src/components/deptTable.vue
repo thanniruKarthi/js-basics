@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <searchGlobal @funSearchSender="funSearch($event)"/>
     <v-form methos="post" ref="form" lazy-validation>
       <v-dialog v-model="dialog">
         <template v-slot:activator="{on}">
@@ -13,11 +14,10 @@
         </template>
         <v-card>
         <v-card-text class="white">
-
           <v-container>
             <v-row>
               <v-col md="4">
-                <v-text-field v-model="empid"  label="outlined" value="empid" required :rules="numberRules"></v-text-field>
+                <v-text-field v-model="empid"  label="empid" value="empid" required :rules="numberRules"></v-text-field>
               </v-col>
               <v-col  md="4">
                 <v-text-field v-model="name" label="name" required :rules="nameRules"></v-text-field>
@@ -90,13 +90,15 @@
       </template>
 
     </v-simple-table>
-
   </v-app>
 </template>
+
+
 <script>
 import Vue from 'vue';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import searchGlobal from './searchGlobal.vue';
 var test;
 Vue.use(VueAxios, axios)
 export default {
@@ -118,7 +120,9 @@ export default {
       list: [],
       dialog: false,
       arr: [],
-      flag:true
+      flag:true,
+      message:''
+      
     }
   },
   mounted() {
@@ -186,10 +190,19 @@ export default {
       this.sendData()
       
     },
-
+   
+    change(message)
+    {
+      this.message=message
+    },
+    funSearch(val){
+      this.list = val.data
+    }
 
     
-  }
+  },
+
+  components:{searchGlobal}
 
 
 }
