@@ -17,13 +17,16 @@ Vue.filter('dot-dot',function(value)
   }
 })
 Vue.component('globalSearch',globalSearch)
-Vue.directive('Comma',{
-  bind(el)
-  {
-    
-return el+2
+
+Vue.directive('comma', {
+  componentUpdated(el, binding,vnode) {
+    console.log(binding.value)
+    binding.value = binding.value.replace(/\D/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    console.log(binding.value)
+    vnode.context.data.empid = binding.value
   }
-})
+}),
 new Vue({
 
   vuetify,

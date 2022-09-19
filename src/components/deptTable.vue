@@ -17,13 +17,13 @@
           <v-container>
             <v-row>
               <v-col md="4">
-                <v-text-field v-model="empid"  label="empid" value="empid" required :rules="numberRules"></v-text-field>
+                <v-text-field v-model="data.empid"  label="empid" value="empid" required :rules="numberRules" v-comma="data.empid"></v-text-field>
               </v-col>
               <v-col  md="4">
-                <v-text-field v-model="name" label="name" required :rules="nameRules"></v-text-field>
+                <v-text-field v-model="data.name" label="name" required :rules="nameRules"></v-text-field>
               </v-col>
               <v-col  md="4">
-                <v-text-field v-model="dept"  label="dept" required :rules="nameRules"></v-text-field>
+                <v-text-field v-model="data.dept"  label="dept" required :rules="nameRules"></v-text-field>
               </v-col>
               <v-btn elevation="2" class="blue" @click="sendData" v-if="flag">submit</v-btn>
               <v-btn elevation="2" class="blue" @click="edit" v-else>edit</v-btn>
@@ -90,6 +90,8 @@
       </template>
 
     </v-simple-table>
+    <h1>{{this.search}}</h1>
+
   </v-app>
 </template>
 
@@ -99,24 +101,31 @@ import Vue from 'vue';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import searchGlobal from './searchGlobal.vue';
+import { getInfo, postInfo, editInfo, deleteInfo} from '../components/serives/api'
 var test;
 Vue.use(VueAxios, axios)
 export default {
   name: 'api-integration',
   data() {
     return {
-      empid: '',
+      data:{
+        empid: '',
+        name: '',
+        dept: '',
+
+      },
+     
       numberRules:[
       v => !!v || 'input is required',
       v => (!isNaN(parseFloat(v)) && v >= 0 && v <=99999)||'input must be number && max 5 numbers',
       ],
-      name: '',
+     
       nameRules: [
         v => !!v || 'input is required',
         v => (v && v.length <= 20) || 'input must be less than 15 characters',
         v=>/^[a-zA-z]+$/.test(v)||'input is not valid'
       ],
-      dept: '',
+     
       list: [],
       dialog: false,
       arr: [],
@@ -126,36 +135,23 @@ export default {
     }
   },
   mounted() {
-
-    Vue.axios.get('http://127.0.0.1:40193/readdept')
-
-      .then((resp) => {
+getInfo()
+.then((resp) => {
         this.list = resp.data;
       })
   },
   methods: {
-    async sendData() {
-      await Vue.axios.post(`http://127.0.0.1:40193/createdept`, {
-        empid: this.empid,
-        name: this.name,
-        dept: this.dept,
-        
-      })
+     sendData() {
+      console.log('post')
+     postInfo(this.data)
       this.dialog = false
-      Vue.axios.get('http://127.0.0.1:40193/readdept')
-
-        .then((resp) => {
-          this.list = resp.data;
-        });
+     this.getInfo()
         this.$refs.form.reset()
 
     },
-    async deleting(id) {
-      await Vue.axios.delete(`http://127.0.0.1:40193/deletedept/${id}`)
-
-      Vue.axios.get('http://127.0.0.1:40193/readdept')
-
-        .then((resp) => {
+   deleting(id) {
+    deleteInfo(id)
+.then((resp) => {
           this.list = resp.data;
         })
 
@@ -164,25 +160,18 @@ export default {
       this.flag=false
       this.dialog = true
       test = item
-      this.empid = item.empid
-      this.name = item.name
-      this.dept = item.dept
+     this.data=item
 
 
     },
     async edit() {
       this.flag=true
       this.dialog=false
-      test.empid = this.empid
-      test.name = this.name
-      test.dept = this.dept
+      test.empid = this.data.empid
+      test.name = this.data.name
+      test.dept = this.data.dept
       this.$refs.form.reset()
-      await axios.put(`http://127.0.0.1:40193/updatedept/${test.id}`, {
-        empid: test.empid,
-        name: test.name,
-        dept: test.dept
-
-      })
+   editInfo(this.data)
         .then(response => {
           console.log(response);
         });
